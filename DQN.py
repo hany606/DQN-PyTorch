@@ -1,6 +1,9 @@
 # References:
-# https://drive.google.com/file/d/0BxXI_RttTZAhVUhpbDhiSUFFNjg/view
+# https://jonathan-hui.medium.com/rl-dqn-deep-q-network-e207751f7ae4
 # https://www.analyticsvidhya.com/blog/2019/04/introduction-deep-q-learning-python/#:~:text=Deep%20Q%2DNetworks,is%20generated%20as%20the%20output.
+# http://rail.eecs.berkeley.edu/deeprlcourse/static/slides/lec-8.pdf
+# https://github.com/openai/gym/wiki/MountainCar-v0
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,19 +11,24 @@ from collections import deque
 import numpy as np
 from copy import deepcopy
 import random
+from math import tanh
+
+np.random.seed(0)
+random.seed(0)
 
 class Net(nn.Module):
     def __init__(self, observations_dim, actions_dim, hidden_dim=500):
         super(Net, self).__init__()
         self._input_layer = nn.Linear(observations_dim, hidden_dim)
         self._hidden1 = nn.Linear(hidden_dim, hidden_dim)
-        # self.hid2 = nn.Linear(100, 100)
+        # self._hidden2 = nn.Linear(64, 32)
         # self.hid3 = nn.Linear(100, 50)
         self._output_layer = nn.Linear(hidden_dim,actions_dim)
 
     def forward(self, x):
         x = F.relu(self._input_layer(x))
         x = F.relu(self._hidden1(x))
+        # x = F.relu(self._hidden2(x))
         x = self._output_layer(x)
         return x
 
@@ -97,6 +105,7 @@ class VanillaDQN:
         self.optimizer = torch.optim.Adam(self.net.parameters(), lr=learning_rate)
         total_num_steps = 0
         for i in range(num_epochs):
+            # self.target_net = deepcopy(self.net)
             obs = self.env.reset()
             epoch_reward = 0
             for t in range(num_steps):
@@ -113,13 +122,17 @@ class VanillaDQN:
                     action = self.env.action_space.sample()
                 # print("Got the action")
                 # Perform the action
-                observation, reward, done, _ = self.env.step(int(action))
+                observation, r, done, _ = self.env.step(int(action))
+                # print(observation[0])
+                # When only the position is in the reward it make it only try to go up not by going right and left but just go right
+                reward = r + abs(observation[1])*10-abs(observation[0]-0.5)#r + abs(observation[1]-2)*5 - abs(observation[0]-0.5)*10 #r - abs(observation[0]-0.5)*5 + (observation[1]-2)*5#r*abs(observation[0] - 0.5) #r+(observation[0] - 0.5) # r*tanh(observation[0] - 0.5) 
+                # print(reward, abs(observation[0]-0.5), abs(observation[1])*2)
                 # print("Env step is done")
-                epoch_reward += reward
+                epoch_reward += r
                 # Store the transition (s_t, a_t, r_t, s_{t+1})
                 self.replay.add(list(deepcopy(obs)), list([action]), reward, list(observation))
                 # print("Experience is added")
-                obs = observation
+                obs = deepcopy(observation)
                 if(self.replay.len() >= batch_size):
                     # print("Going to update the policy")
                     # Sample random batch
@@ -139,9 +152,28 @@ class VanillaDQN:
 
                 if(total_num_steps % target_update_freq == 0):
                     self.target_net = deepcopy(self.net)
-                    print("Target is shifted")
+                    # print("Target is shifted")
                     # exit()
-                if(t == num_steps-1 and done):
+
+                if(observation[0] > 0.48):
+                    print(observation[0])
+                    print("Done with 0.01 difference between the goal")
+                    print(f"Epoch {i+1} (reward): {epoch_reward}")
+                    # self.save("./")
+                    observation = self.env.reset()
+                    done = False
+                    total_reward = 0
+                    while not done:
+                        # self.env.render()
+                        action = int(self.sample_action(observation))
+                        observation, reward, done, _ = self.env.step(action)
+                        total_reward += reward
+                    print(f"Epoch {i+1} (Test reward): {total_reward}")
+                    break         
+                
+                if(t == num_steps-1 or reward == 0):
+                    print(r, done)
+                    # print(abs(observation[0]-0.5))
                     print(f"Epoch {i+1} (reward): {epoch_reward}")
                     break         
 
