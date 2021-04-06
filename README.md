@@ -7,6 +7,18 @@ I have implemented (Simple-Vanilla) Deep Q-Network (DQN) algorithm with experien
 
 ![Trained Agent](https://github.com/hany606/Internship-Task/gif/agent2.gif)
 
+After testing with the original reward of the environment, nothing was improved in the training. So, I have changed the reward function, to test different behavior and see some improvements.
+
+Multiple reward functions have been tested to conform with the desired behaviors:
+- Move with fast right and left -> Correlated with velocity [2nd observation]
+
+- Move closer to the goal -> Correlated with the position [1st observation]
+
+I have noticed some observations:
+
+- When only the position is in the reward (or the position dominated) it makes it only try to go up not by going right and left but just go right
+
+- When only the velocity is in the reward (or the velocity dominated) it makes it only to move fast right and left and don't care about the real goal (position)
 
 ## How to use?
 
@@ -26,6 +38,9 @@ Reward training plot for 500 epochs:
 
 ![Reward plot](https://github.com/hany606/Internship-Task/dqn_trained_agnets/agent2/best_model_dqn.png)
 
+Reward testing plot for 100 epochs:
+
+![Reward plot](https://github.com/hany606/Internship-Task/dqn_trained_agnets/agent2/best_model_dqn_testing.png)
 
 
 

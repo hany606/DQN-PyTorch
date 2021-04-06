@@ -53,7 +53,28 @@ while not done:
     action = get_action(observation, dqn_agent)
     observation, reward, done, _ = env.step(action)
     total_reward += reward
-display_frames_as_gif(frames, "agent2.gif")
+display_frames_as_gif(frames, "gif/agent2.gif")
 print(f"Total reward: {total_reward}, Done flag: {done}")
+
+
+rewards_list = []
+for i in range(100):
+    observation = env.reset()
+    done = False
+    total_reward = 0
+    while not done:
+        action = get_action(observation, dqn_agent)
+        observation, reward, done, _ = env.step(action)
+        total_reward += reward
+    rewards_list.append(total_reward)
+    print(f"Total reward: {total_reward}, Done flag: {done}")
+
+plt.clf()
+plt.plot([i+1 for i in range(100)], rewards_list)
+plt.xlabel("Epochs")
+plt.ylabel("Reward")
+plt.savefig("./dqn_trained_agents/agent2/best_model_dqn_testing.png")
+plt.show()
+
 # env.close()
     
