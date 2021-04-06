@@ -3,8 +3,9 @@ This repository is for solving a task for a summer 2021 research internship  "Im
 
 ## Details and Explanation
 
-I have implemented (Simple-Vanilla) Deep Q-Network (DQN) algorithm with experience replay buffer and frequent change for the target network inside "DQN.py".
+I have implemented (Simple/Vanilla) Deep Q-Network (DQN) algorithm with experience replay buffer and frequent change for the target network inside "DQN.py".
 
+A gif for a trained agent by this implementation of DQN
 ![Trained Agent](https://github.com/hany606/Internship-Task/blob/main/gif/agent2.gif)
 
 After testing with the original reward of the environment, nothing was improved in the training. So, I have changed the reward function, to test different behavior and see some improvements.
@@ -19,6 +20,13 @@ I have noticed some observations:
 - When only the position is in the reward (or the position dominated) it makes it only try to go up not by going right and left but just go right
 
 - When only the velocity is in the reward (or the velocity dominated) it makes it only to move fast right and left and don't care about the real goal (position)
+
+And for that I have made a new reward function:
+
+<!-- ![formula](https://render.githubusercontent.com/render/math?math=reward= r + abs(velocity)*10 - abs(position-0.5)) -->
+![equation](https://bit.ly/3wyWSzu)
+
+such that r is the original reward (0 or -1) from the environment, 0.5 in the equation is the desired position for the car. And the weight scalar factor (10) was tuned with experiments in such a way if it is too much the car will only be interested in gaining velocity and not reach the desired position and it is too small, the car (agent) will be interested in be closer to the goal but not in gaining veocity first to swing in order to reach the top
 
 ## How to use?
 
