@@ -5,7 +5,7 @@ This repository is for solving a task for a summer 2021 research internship  "Im
 
 I have implemented (Simple-Vanilla) Deep Q-Network (DQN) algorithm with experience replay buffer and frequent change for the target network inside "DQN.py".
 
-![Trained Agent](https://github.com/hany606/Internship-Task/gif/agent2.gif)
+![Trained Agent](https://github.com/hany606/Internship-Task/blob/main/gif/agent2.gif)
 
 After testing with the original reward of the environment, nothing was improved in the training. So, I have changed the reward function, to test different behavior and see some improvements.
 
@@ -36,7 +36,7 @@ I have noticed some observations:
 
 Reward training plot for 500 epochs:
 
-![Reward plot](https://github.com/hany606/Internship-Task/dqn_trained_agnets/agent2/best_model_dqn.png)
+![Reward plot](https://github.com/hany606/Internship-Task/blob/main/dqn_trained_agents/agent2/best_model_dqn.png)
 
 Reward testing plot for 100 epochs:
 
