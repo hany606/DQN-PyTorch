@@ -40,7 +40,7 @@ Reward training plot for 500 epochs:
 
 Reward testing plot for 100 epochs:
 
-![Reward plot](https://github.com/hany606/Internship-Task/dqn_trained_agnets/agent2/best_model_dqn_testing.png)
+![Reward plot](https://github.com/hany606/Internship-Task/blob/main/dqn_trained_agents/agent2/best_model_dqn_testing.png)
 
 
 
