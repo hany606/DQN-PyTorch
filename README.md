@@ -6,6 +6,7 @@ This repository is for solving a task for a summer 2021 research internship  "Im
 I have implemented (Simple/Vanilla) Deep Q-Network (DQN) algorithm with experience replay buffer and frequent change for the target network inside "DQN.py".
 
 A gif for a trained agent by this implementation of DQN
+
 ![Trained Agent](https://github.com/hany606/Internship-Task/blob/main/gif/agent2.gif)
 
 After testing with the original reward of the environment, nothing was improved in the training. So, I have changed the reward function, to test different behavior and see some improvements.
