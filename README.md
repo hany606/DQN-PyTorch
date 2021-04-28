@@ -1,5 +1,5 @@
-# Internship-Task
-This repository is for solving a task for a summer 2021 research internship  "Implement DQN, policy gradient or actor-critic RL algorith to solve Mountain-Car gym environment"
+# DQN-PyTorch
+This repository was mainly for solving a task for JetBrains Research Lab summer 2021 internship. The task's description is: "Implement DQN, policy gradient or actor-critic RL algorith to solve Mountain-Car gym environment"
 
 ## Details and Explanation
 
@@ -67,11 +67,11 @@ Reward testing plot for 100 epochs:
 
 - [x] Implement Vanilla DQN for value-based RL algorithm
 
-- [ ] Implement REINFORCE for Policy Gradient
-
-- [ ] Implement simple Actor-Critic algorithm
-
 - [x] Write good README.md with cool gifs
+
+- [ ] Implement REINFORCE for Policy Gradient (Maybe in different repo)
+
+- [ ] Implement simple Actor-Critic algorithm (Maybe in different repo)
 
 - [ ] Add more plots with more experiments with different seeds
 
